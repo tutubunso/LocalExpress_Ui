@@ -1,32 +1,56 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div v-if='$store.state.user'>
+        <headers></headers>
+        <menu></menu>
+          <router-view />
     </div>
-    <router-view/>
+    <div v-else>
+        <login ></login>
+    </div>
   </div>
 </template>
+<script type="text/javascript">
+  
+import headers from './components/header.vue'
+import menu from './components/menu.vue'
+import login from './components/login.vue'
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+export default {
+  data(){
+    return{
+    }
+  },
+  components: {
+      headers,
+      menu,
+      login
+  },
+  methods:{
 
-#nav {
-  padding: 30px;
-}
+  },
+  mounted() {
+    var user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      this.$store.state.user = user
+    }
+  },
+    watch: {
+    '$store.state.user': {
+      deep: true,
+      handler(new_val){
+        if (new_val) {
+          localStorage.setItem('user', JSON.stringify(new_val))
+        } else {
+          localStorage.removeItem('user')
+        }
+                
+      }
+    }
+  },
+};
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+<style src="">
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
