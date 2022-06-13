@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="screen">
 			<div class="screen__content">
-				<div class="login">s
+				<div class="login">
 					<div class="login__field">
 						<i class="login__icon fas fa-user"></i>
 						<input type="text" class="login__input" v-model="username" autofocus='True'  placeholder="User name / Email">
@@ -11,10 +11,10 @@
 						<i class="login__icon fas fa-lock"></i>
 						<input type="password" class="login__input" v-model="password" name="" id=""  placeholder="Password">
 					</div>
-					<button type="submit" class="button login__submit">
-						<span type="submit" class="button__text" @click="Login">Log In Now</span>
-						<i class="button__icon fas fa-chevron-right"></i>
-					</button>				
+					<button type="submit" class="button login__submit" @click="login">
+						<span type="submit" class="button__text" @click="login">Log In Now</span>
+						<i class="button__icon fas fa-chevron-right"@click="login"></i>
+					</button>	
 				</div>
 			</div>
 			<div class="screen__background">
@@ -22,40 +22,40 @@
 				<span class="screen__background__shape screen__background__shape3"></span>		
 				<span class="screen__background__shape screen__background__shape2"></span>
 				<span class="screen__background__shape screen__background__shape1"></span>
-			</div>		
+			</div>	
 		</div>
 	</div>
 </template>
 
 <script >
-	import axios from 'axios'
-	export default{
-	data(){
-			return{
-			username :"",
-			password :"",
-			user :[],
-			}
-	},
-	mounted(){
-			console.log("Login mounted")
-	},
-	methods:{
-		Login(){
-			let data = new FormData()
-			data.append('username',this.username)
-			data.append('password',this.password)
-			axios.post(this.url+'login/',data)
-					.then ((response)=>{
-							this.$store.state.user = response.data
-							console.log(this.$store.state.user)
-					})
-					.catch((error)=>{
-							console.log(error)
-					})
-			}
-		},
-	};
+    import axios from 'axios'
+    export default{
+    data(){
+        return{
+        username :"",
+        password :"",
+        user :[],
+        }
+    },
+    mounted(){
+        console.log("Login mounted")
+    },
+    methods:{
+        Login(){
+            let data = new FormData()
+            data.append('username',this.username)
+            data.append('password',this.password)
+            axios.post(this.url+'login/',data)
+                .then ((response)=>{
+                    this.$store.state.user = response.data
+                    console.log(this.$store.state.user)
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })
+            }
+        },
+    };
 
 </script>
 
